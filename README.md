@@ -79,6 +79,32 @@ stellar contract deploy \
 
 Last build: `counter.wasm` — **4,146 bytes**, 6 exported functions, wasm hash `38124ffb9212ca5f81d09a120cd1f68c9482e55a4311838331120c627a374260`.
 
+## Deployments
+
+| Network | Contract | Address |
+|---------|----------|---------|
+| Testnet | counter | [`CCHALDU4IBCI7BDOFHME3DMHBZ2WOA3DHZN3E5UX527K37M3IKC6PH2I`](https://stellar.expert/explorer/testnet/contract/CCHALDU4IBCI7BDOFHME3DMHBZ2WOA3DHZN3E5UX527K37M3IKC6PH2I) |
+
+Verified on testnet after deploy:
+
+```text
+get              -> 0            (before initialize)
+initialize       -> Success      event: Initialized, owner: GBSNJ6…W4T6
+increment        -> 1
+increment        -> 2
+get              -> 2
+owner            -> GBSNJ6242YBOQ3JYX3PXWMOV3RJAEFL42CVL3XBDGQYBQHRLTIWYW4T6
+```
+
+Deployment transaction: [`4c6e330a…c28a0`](https://stellar.expert/explorer/testnet/tx/4c6e330a0db8ff4157df98ee255864379eacb4e5cc8baf63371a2ae7329c28a0).
+Reproduce with:
+
+```bash
+stellar contract deploy \
+  --source-account <identity> --network testnet \
+  -- target/wasm32v1-none/release/counter.wasm
+```
+
 ## Project Layout
 
 ```
@@ -105,6 +131,7 @@ Unit tests run on the Soroban host in-process — no network, no Docker, no fund
 | Area | Status |
 |------|--------|
 | counter contract | ✅ Built, tested (13 tests) |
+| Deployment to testnet | ✅ Live at `CCHALDU…6PH2I`, interactions verified |
 | Deployment to StellarYard local network | 🚧 Planned |
 | Additional starter contracts | 🚧 Planned — see [open issues](https://github.com/StellarYard/stellaryard-contracts/issues) |
 
