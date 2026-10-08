@@ -64,9 +64,18 @@ jobs:
       # `stellar contract build` is required, not plain cargo: the Soroban
       # SDK's build script needs the spec-shaking handshake the Stellar CLI
       # performs, and fails on purpose without it.
+      #
+      # Pinned release asset instead of the install.sh script — that URL
+      # serves an HTML error page, which `sh` rejects with a parse error.
       - name: Install Stellar CLI
+        env:
+          STL_VERSION: "28.1.0"
         run: |
-          curl -sSL https://stellar.github.io/install.sh | sh
+          mkdir -p "$HOME/.local/bin"
+          curl -sSL --fail -o "$RUNNER_TEMP/stellar-cli.tar.gz" \
+            "https://github.com/stellar/stellar-cli/releases/download/v${STL_VERSION}/stellar-cli-${STL_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          tar -xzf "$RUNNER_TEMP/stellar-cli.tar.gz" -C "$RUNNER_TEMP"
+          install -m 0755 "$RUNNER_TEMP/stellar" "$HOME/.local/bin/stellar"
           echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
       - name: Verify Stellar CLI version
