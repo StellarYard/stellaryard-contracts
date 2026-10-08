@@ -1,0 +1,14 @@
+# Rust / Cargo
+target/
+**/*.rs.bk
+
+# Editor and OS noise
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# Local identities and network config — never commit keys
+.stellar/
+*.env
+.env

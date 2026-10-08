@@ -1,0 +1,23 @@
+[workspace]
+members = ["contracts/counter"]
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+repository = "https://github.com/StellarYard/stellaryard-contracts"
+
+[workspace.dependencies]
+soroban-sdk = "29.0.0"
+
+# Optimized for on-chain deployment: small bytecode matters more than speed
+# because contract size counts against Soroban's storage residency costs.
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+lto = true
+debug-assertions = false
+panic = "abort"
+codegen-units = 1
+strip = true
